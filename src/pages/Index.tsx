@@ -2,8 +2,10 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Icon from "@/components/ui/icon";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Index = () => {
+  const navigate = useNavigate();
   const [isPlaying, setIsPlaying] = useState(false);
   const [audio] = useState(new Audio("https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3"));
 
@@ -136,6 +138,7 @@ const Index = () => {
           >
             <Button 
               size="lg"
+              onClick={() => navigate('/room')}
               className="bg-primary hover:bg-primary/80 text-primary-foreground px-12 py-6 text-xl font-medium rounded-full shadow-lg hover:shadow-xl transition-all animate-glow"
               style={{ fontFamily: "'Raleway', sans-serif" }}
             >
