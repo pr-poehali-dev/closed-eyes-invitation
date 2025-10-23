@@ -1,9 +1,43 @@
 import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import Icon from "@/components/ui/icon";
+import { useState, useEffect } from "react";
 
 const Index = () => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [audio] = useState(new Audio("https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3"));
+
+  useEffect(() => {
+    audio.loop = true;
+    audio.volume = 0.3;
+    
+    return () => {
+      audio.pause();
+    };
+  }, [audio]);
+
+  const toggleMusic = () => {
+    if (isPlaying) {
+      audio.pause();
+    } else {
+      audio.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#2D1B4E] via-[#6B4C9A] to-[#2D1B4E] relative overflow-hidden flex items-center justify-center p-4">
+      <button
+        onClick={toggleMusic}
+        className="absolute top-6 right-6 z-20 w-12 h-12 rounded-full bg-primary/30 backdrop-blur-sm border border-primary/50 flex items-center justify-center hover:bg-primary/40 transition-all"
+      >
+        <Icon 
+          name={isPlaying ? "Volume2" : "VolumeX"} 
+          size={20} 
+          className="text-accent"
+        />
+      </button>
+
       <div className="absolute inset-0 overflow-hidden">
         {[...Array(30)].map((_, i) => (
           <div
@@ -90,6 +124,24 @@ const Index = () => {
             <Icon name="Heart" size={24} className="text-accent animate-pulse" />
             <Icon name="Star" size={24} className="text-accent animate-pulse" style={{ animationDelay: '0.2s' }} />
             <Icon name="Heart" size={24} className="text-accent animate-pulse" style={{ animationDelay: '0.4s' }} />
+          </div>
+
+          <div 
+            className="pt-8 animate-fade-in"
+            style={{ 
+              animationDelay: '1s',
+              opacity: 0,
+              animationFillMode: 'forwards'
+            }}
+          >
+            <Button 
+              size="lg"
+              className="bg-primary hover:bg-primary/80 text-primary-foreground px-12 py-6 text-xl font-medium rounded-full shadow-lg hover:shadow-xl transition-all animate-glow"
+              style={{ fontFamily: "'Raleway', sans-serif" }}
+            >
+              Войти
+              <Icon name="ChevronRight" size={24} className="ml-2" />
+            </Button>
           </div>
         </div>
       </Card>
